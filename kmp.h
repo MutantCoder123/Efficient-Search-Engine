@@ -5,7 +5,7 @@
 #include<algorithm>
 #include<cctype> 
 
-// quick helper to lower case a string
+// Quick helper to lower case a string
 std::string toLowerStr(std::string s) {
     for(auto &c : s) c = tolower(c);
     return s;
@@ -34,9 +34,12 @@ void makeLps(std::string &pt, std::vector<int> &lps, int k) {
         }
     }
 }
-
+// KMP ALGORITHM:
+// Efficiently searches for the query inside the document text.
+// Unlike naive search (O(N*M)), KMP uses a pre-computed table
+// to skip unnecessary comparisons, achieving O(N+M) complexity.
 std::string getSnippet(std::string s, std::string p) {
-    // use lowercase copies for matching
+    // Use lowercase copies for matching
     std::string sLow = toLowerStr(s);
     std::string pLow = toLowerStr(p);
 
@@ -51,7 +54,7 @@ std::string getSnippet(std::string s, std::string p) {
     int shift = -1;
 
     for(int i=0; i<n; i++) {
-        // compare the lowercase versions
+        // Compare the lowercase versions
         if(sLow[i]==pLow[j]) {
             j++;
         }
@@ -68,7 +71,7 @@ std::string getSnippet(std::string s, std::string p) {
     }
 
     if(shift!=-1) {
-        // grab the substring from the ORIGINAL 's' to keep formatting
+        // Grab the substring from the ORIGINAL 's' to keep formatting
         int start = std::max(0, shift-30);
         int end = std::min(n, shift+k+50);
         return "..." + s.substr(start, end-start) + "...";

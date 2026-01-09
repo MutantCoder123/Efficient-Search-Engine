@@ -9,7 +9,7 @@ class Arena {
         size_t size;
         size_t offset;
     public:
-        // grab big chunk of memory at start to avoid malloc overhead
+        // Grab big chunk of memory at start to avoid malloc overhead
         Arena(size_t totalsize) {
             size = totalsize;
             memblock = (char*)std::malloc(size);
@@ -19,8 +19,11 @@ class Arena {
                 std::exit(1);
             }
         }
-        
-        // bump pointer allocation - O(1) and cache friendly
+    
+        // ALLOC FUNCTION:
+        // Returns a pointer to the next free block of memory.
+        // We simply move the 'ptr' forward by 'size' bytes.
+        // This is O(1) and much faster than standard malloc().
         void* alloc(size_t needed) {
             if(offset+needed > size) {
                 std::cerr<<"Arena full\n";

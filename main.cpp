@@ -1,3 +1,14 @@
+/**
+ * @file main.cpp
+ * @author Indranil Saha
+ * @brief Efficient Search Engine using Trie and KMP Algorithm.
+ * @version 1.0
+ * @date 2026-01-09
+ * * Features:
+ * - Custom Memory Arena (No malloc/free overhead)
+ * - Boolean Search with Prefix Matching
+ * - Context-aware snippet generation
+ */
 #include<iostream>
 #include<fstream>
 #include<sstream>
@@ -16,7 +27,7 @@ struct Document {
     string content;
 };
 
-// helper to read text files
+// Helper to read text files
 string readFile(const string& path) {
     ifstream file(path);
     if(!file.is_open()) return "";
@@ -28,7 +39,7 @@ string readFile(const string& path) {
 int main() {
     cout<<"--- SEARCH ENGINE v1 ---\n";
 
-    // 1. system init
+    // 1. System init
     // 50mb arena for real files
     size_t arenaSize = 50 * 1024 * 1024;
     Arena myArena(arenaSize);
@@ -37,7 +48,7 @@ int main() {
     invertedIdx index(&myArena);
     vector<Document> corpus;
 
-    // 2. load data
+    // 2. Load data
     vector<string> files = {
         "data/AI_taking_works.txt", 
         "data/boy_and_wolf.txt",
@@ -59,7 +70,7 @@ int main() {
         docId++;
     }
 
-    // 3. indexing
+    // 3. Indexing
     auto startIdx = chrono::high_resolution_clock::now();
     for(const auto& doc : corpus) {
         string word = "";
@@ -82,7 +93,7 @@ int main() {
     cout<<"[SYS] Indexing done in "<<durIdx.count()<<" us\n";
     cout<<"[SYS] Ram used: "<<myArena.getUsed()<<" bytes\n";
 
-    // 4. search loop
+    // 4. Search loop
     while(true) {
         cout<<"\nEnter query (exit to quit): ";
         string q;
@@ -104,7 +115,7 @@ int main() {
                 if(id==last) continue;
                 last = id;
 
-                // get details
+                // Get details
                 string name = ""; 
                 string text = "";
                 for(auto& d : corpus) {

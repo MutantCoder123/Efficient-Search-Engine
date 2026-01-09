@@ -18,7 +18,7 @@ class invertedIdx {
 
         trieNode* createNode() {
             trieNode* node = (trieNode*)arena->alloc(sizeof(trieNode));
-            // fast clear memory
+            // Fast clear memory
             std::memset(node->children, 0, sizeof(node->children));
             new (&node->docID) std::vector<int>();
             node->isEnd = false;
@@ -35,7 +35,7 @@ class invertedIdx {
             trieNode* ptr = root;
             for(char c : word) {
                 int idx = c - 'a';
-                if(idx<0 || idx>25) continue; // skip weird chars
+                if(idx<0 || idx>25) continue; // Skip weird chars
                 
                 if(!ptr->children[idx]) {
                     ptr->children[idx] = createNode();
@@ -43,7 +43,7 @@ class invertedIdx {
                 ptr = ptr->children[idx];
             }
             ptr->isEnd = true;
-            // prevent duplicate docIDs for same word
+            // Prevent duplicate docIDs for same word
             if(ptr->docID.empty() || ptr->docID.back()!=docID) {
                 ptr->docID.push_back(docID);
             }
