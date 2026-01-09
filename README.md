@@ -1,3 +1,6 @@
+![Language](https://img.shields.io/badge/language-C++-00599C?style=for-the-badge&logo=c%2B%2B)
+![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
+![Status](https://img.shields.io/badge/status-Active-success?style=for-the-badge)
 # High-Performance Search Engine (C++)
 
 A high-efficiency text search engine built from scratch in C++. This project demonstrates low-level memory management and advanced data structure optimization to perform sub-microsecond keyword searches over large text corpora.
