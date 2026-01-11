@@ -64,16 +64,23 @@ std::string getSnippet(std::string s, std::string p) {
                 i--;
             }
         }
-        if(j==k) {
-            shift = (i-j) + 1;
+        if (j == k) {
+        if ( ((i == n - 1) || !isalnum(s[i + 1])) && 
+                ((i - j < 0)  || !isalnum(s[i - j])) ) {
+             
+            shift = (i - j) + 1;
             break; // found it
         }
+        j = lps[j-1]; // Reset to keep searching if not a whole word
+    }
     }
 
     if(shift!=-1) {
         // Grab the substring from the ORIGINAL 's' to keep formatting
         int start = std::max(0, shift-30);
         int end = std::min(n, shift+k+50);
+        while(start>0 && s[start]!=' ')     start--;
+        while(end<n && s[end]!=' ')     end++;
         return "..." + s.substr(start, end-start) + "...";
     }
     return "";

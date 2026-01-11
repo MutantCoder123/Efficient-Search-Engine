@@ -7,7 +7,7 @@
 
 struct trieNode {
     trieNode* children[26];
-    std::vector<int> docID;
+    std::vector<std::pair<int,double>> docID;       //(docID,frequency)
     bool isEnd;
 };
 
@@ -43,13 +43,12 @@ class invertedIdx {
                 ptr = ptr->children[idx];
             }
             ptr->isEnd = true;
-            // Prevent duplicate docIDs for same word
-            if(ptr->docID.empty() || ptr->docID.back()!=docID) {
-                ptr->docID.push_back(docID);
-            }
+            // Count how many times a word is appearing in a document
+            if(ptr->docID.empty() || (ptr->docID.back().first!=docID))  ptr->docID.push_back({docID,1});
+            else   ptr->docID.back().second++;
         }
 
-        std::vector<int> search(const std::string& word) {
+        std::vector<std::pair<int,double>> search(const std::string& word) {
             trieNode* ptr = root;
             for(char c : word) {
                 int idx = c - 'a';
